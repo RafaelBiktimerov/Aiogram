@@ -21,6 +21,11 @@ async def cmd_test(message: types.Message):
     await message.answer('hi')
 
 
+@dp.message_handler()
+async def text(message: types.Message):
+    await message.answer(message.text)
+
+
 async def main():
     await dp.start_polling()
 
