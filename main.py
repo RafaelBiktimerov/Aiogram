@@ -3,6 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher, types
 from config import config
 import sqlite3
+import aiosqlite
 
 
 logging.basicConfig(level=logging.INFO)
@@ -56,7 +57,10 @@ async def bot_body(call):
 
 @dp.message_handler(commands=['test'])
 async def cmd_test(message: types.Message):
-    await message.answer('hi')
+    db = await aiosqlite.connect('menu.db')
+    cursor = await db.execute('SELECT * FROM base')
+    rows = await cursor.fetchall()
+    await bot.send_message(chat_id=message.chat.id, text=rows)
 
 
 @dp.message_handler()
