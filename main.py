@@ -58,8 +58,8 @@ async def bot_body(call):
 @dp.message_handler(commands=['test'])
 async def cmd_test(message: types.Message):
     db = await aiosqlite.connect('menu.db')
-    cursor = await db.execute('SELECT * FROM base')
-    rows = await cursor.fetchall()
+    cur = await db.execute('SELECT * FROM base')
+    rows = await cur.fetchall()
     await bot.send_message(chat_id=message.chat.id, text=rows)
 
 
